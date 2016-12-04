@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cursach
 {
-    class Processing
+    class PROCESSING
     {
     }
 }
