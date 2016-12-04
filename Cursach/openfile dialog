@@ -1,0 +1,64 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace lab5
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (var openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Comma Separated Value(*.csv) | *.csv";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    txtInputFilePath.Text=openFileDialog.FileName;
+                }
+            }
+
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            string A = txtInputFilePath.Text;
+            if (!File.Exists(A))
+            {
+                MessageBox.Show("Указан несуществующий файл.");
+                return;
+            }
+            try
+            {
+                string[] content = File.ReadAllLines(txtInputFilePath.Text);
+                lstContent.DataSource = content;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+    }
+}

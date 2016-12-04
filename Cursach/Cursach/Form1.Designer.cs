@@ -30,11 +30,13 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtFilePath = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lsbOut = new System.Windows.Forms.ListBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtCommnd = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -58,68 +60,93 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Выходные данные:";
             // 
-            // textBox1
+            // txtFilePath
             // 
-            this.textBox1.Location = new System.Drawing.Point(185, 33);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(352, 20);
-            this.textBox1.TabIndex = 2;
+            this.txtFilePath.Location = new System.Drawing.Point(185, 33);
+            this.txtFilePath.Margin = new System.Windows.Forms.Padding(2);
+            this.txtFilePath.Name = "txtFilePath";
+            this.txtFilePath.Size = new System.Drawing.Size(352, 20);
+            this.txtFilePath.TabIndex = 2;
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(598, 33);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(106, 30);
             this.button1.TabIndex = 4;
             this.button1.Text = "Обзор...";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // listBox1
+            // lsbOut
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(185, 103);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(352, 381);
-            this.listBox1.TabIndex = 5;
+            this.lsbOut.FormattingEnabled = true;
+            this.lsbOut.Location = new System.Drawing.Point(185, 103);
+            this.lsbOut.Margin = new System.Windows.Forms.Padding(2);
+            this.lsbOut.Name = "lsbOut";
+            this.lsbOut.Size = new System.Drawing.Size(352, 381);
+            this.lsbOut.TabIndex = 5;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(598, 229);
-            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button2.Enabled = false;
+            this.button2.Location = new System.Drawing.Point(598, 147);
+            this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(106, 30);
             this.button2.TabIndex = 6;
             this.button2.Text = "Результат";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // btnSave
             // 
-            this.button3.Location = new System.Drawing.Point(598, 103);
-            this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(106, 30);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Сохранить файл...";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnSave.Enabled = false;
+            this.btnSave.Location = new System.Drawing.Point(598, 103);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(106, 30);
+            this.btnSave.TabIndex = 7;
+            this.btnSave.Text = "Сохранить файл...";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(70, 69);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(91, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Cтрока запроса:";
+            // 
+            // txtCommnd
+            // 
+            this.txtCommnd.Location = new System.Drawing.Point(185, 66);
+            this.txtCommnd.Name = "txtCommnd";
+            this.txtCommnd.Size = new System.Drawing.Size(352, 20);
+            this.txtCommnd.TabIndex = 10;
+            this.txtCommnd.Text = "union table1 table2 where id>0";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 500);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.txtCommnd);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.lsbOut);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtFilePath);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "SQL--";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,11 +156,13 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtFilePath;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnSave;
+        public System.Windows.Forms.ListBox lsbOut;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtCommnd;
     }
 }
 
