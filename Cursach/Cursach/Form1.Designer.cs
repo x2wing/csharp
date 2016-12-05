@@ -36,7 +36,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtCommnd = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.lstCmd = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // label1
@@ -53,7 +54,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(62, 103);
+            this.label2.Location = new System.Drawing.Point(58, 181);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(103, 13);
@@ -82,10 +83,10 @@
             // lsbOut
             // 
             this.lsbOut.FormattingEnabled = true;
-            this.lsbOut.Location = new System.Drawing.Point(185, 103);
+            this.lsbOut.Location = new System.Drawing.Point(185, 181);
             this.lsbOut.Margin = new System.Windows.Forms.Padding(2);
             this.lsbOut.Name = "lsbOut";
-            this.lsbOut.Size = new System.Drawing.Size(352, 381);
+            this.lsbOut.Size = new System.Drawing.Size(352, 303);
             this.lsbOut.TabIndex = 5;
             // 
             // button2
@@ -122,20 +123,35 @@
             this.label3.TabIndex = 9;
             this.label3.Text = "Cтрока запроса:";
             // 
-            // txtCommnd
+            // button3
             // 
-            this.txtCommnd.Location = new System.Drawing.Point(185, 66);
-            this.txtCommnd.Name = "txtCommnd";
-            this.txtCommnd.Size = new System.Drawing.Size(352, 20);
-            this.txtCommnd.TabIndex = 10;
-            this.txtCommnd.Text = "union table1 table2 where id>0";
+            this.button3.Location = new System.Drawing.Point(598, 306);
+            this.button3.Margin = new System.Windows.Forms.Padding(2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(106, 30);
+            this.button3.TabIndex = 11;
+            this.button3.Text = "тестовая кнопка";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // lstCmd
+            // 
+            this.lstCmd.FormattingEnabled = true;
+            this.lstCmd.Items.AddRange(new object[] {
+            "union awhere      dfgdfg|"});
+            this.lstCmd.Location = new System.Drawing.Point(185, 69);
+            this.lstCmd.Name = "lstCmd";
+            this.lstCmd.Size = new System.Drawing.Size(352, 56);
+            this.lstCmd.TabIndex = 12;
+            this.lstCmd.SelectedIndexChanged += new System.EventHandler(this.lstCmd_SelectedIndexChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(752, 500);
-            this.Controls.Add(this.txtCommnd);
+            this.Controls.Add(this.lstCmd);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.button2);
@@ -162,7 +178,8 @@
         private System.Windows.Forms.Button btnSave;
         public System.Windows.Forms.ListBox lsbOut;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtCommnd;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ListBox lstCmd;
     }
 }
 

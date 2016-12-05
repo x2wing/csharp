@@ -31,9 +31,13 @@ namespace Cursach
         
     }
 
+     
+
     class StartInit: Table
     {
+        public delegate void Semantec_analize(string cmd);
 
+        Semantec_analize _Semantec_analize;
         // аргументы команды
         protected string union_arg1;
         protected string union_arg2;
@@ -76,11 +80,63 @@ namespace Cursach
 
         }
 
-        public void sintax_analize()
+        public bool Sintax_analize(string command)
+        {
+            const string command_mask1 = "union * *|where * ? *|";
+            const string command_mask2 = "union * *|";
+            const string command_mask3 = "where * ? *|";
+
+            if (command.Contains("union ") && command.Contains("where ") && PROCESSING.Match(command, command_mask1))
+            {
+                _Semantec_analize =  new Semantec_analize(Semantic_analizer1);
+                return true;
+            }
+            else if (command.Contains("union ") && PROCESSING.Match(command, command_mask2))
+            {
+                _Semantec_analize =  new Semantec_analize(Semantic_analizer2);
+                return true;
+            }
+            else if (command.Contains("where ") && PROCESSING.Match(command, command_mask3))
+            {
+                _Semantec_analize =  new Semantec_analize(Semantic_analizer3);
+                return true;
+            }
+
+            
+            return false;
+        }
+
+        public void Semantec_analize_foo(string cmd)
+        {
+            _Semantec_analize(cmd);
+        }
+
+        
+        public static  void Semantic_analizer1(string cmd)
         {
 
         }
+        public static void Semantic_analizer2(string cmd)
+        {
+
+            //List<string> args = stri cmd.Split(' ');
+            List<string> args = new List<string>(cmd.Split(' '));
+            args.RemoveAll(s => s== "" );
+
+        }
+        public static void Semantic_analizer3(string cmd)
+        {
+
+        }
+
+
+        //public string[] cleaning(string[] args)
+        //{
+
+        //    //return clean_args;
+        //}
     }
+
 
 
 }

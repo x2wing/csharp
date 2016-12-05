@@ -28,7 +28,7 @@ namespace Cursach
         {
             FormOut A = new FormOut(this, Data1.records);
             A.Write();
-            bool flag = PROCESSING.Match(txtCommnd.Text, "union * * where *");
+            //bool flag = PROCESSING.Match(txtCommnd.Text, "union * * where *");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -45,6 +45,24 @@ namespace Cursach
         private void btnSave_Click(object sender, EventArgs e)
         {
             //Table file1 = new Table();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            
+
+            StartInit A = new StartInit();
+            foreach (string icmd in lstCmd.Items)
+            {
+                if (A.Sintax_analize(icmd))
+                    A.Semantec_analize_foo(icmd);
+            }
+
+        }
+
+        private void lstCmd_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -17,10 +17,10 @@ namespace Cursach
 
         public void less()
         {
-            if (GetCol(where_col)> where_arg)
-            {
+            //if (GetCol(where_col)> where_arg)
+            //{
 
-            }
+            //}
          }
 
         public void greater()
