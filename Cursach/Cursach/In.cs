@@ -50,6 +50,8 @@ namespace Cursach
         public string tablename;
         // метод абстрактный для заполнения списка      
 
+        public Table() { }
+
         public Table(string path)
         {
             FillingTable(path);
@@ -87,7 +89,7 @@ namespace Cursach
         public delegate void Semantec_analize(string cmd);
 
         Semantec_analize _Semantec_analize;
-        List<Table> Tables = new List<Table>();
+        protected List<Table> Tables = new List<Table>();
         // аргументы команды
         protected static string union_arg1;
         protected static string union_arg2;
@@ -139,7 +141,7 @@ namespace Cursach
 
                 if (command.Contains("union ") && command.Contains("where ") && PROCESSING.Match(command, command_mask1))
                 {
-                    _Semantec_analize = new Semantec_analize(Semantic_analizer1);
+                    _Semantec_analize = new Semantec_analize(Semantic_analizerUW);
                     return true;
                 }
                 else if (command.Contains("union ") && PROCESSING.Match(command, command_mask2))
@@ -165,7 +167,7 @@ namespace Cursach
 
 
 
-        public static void Semantic_analizer1(string cmd)
+        public static void Semantic_analizerUW(string cmd)
             {
                 List<string> args_temp = new List<string>(cmd.Split('|'));
                 SemanticAnalizerUnion(args_temp[0]);

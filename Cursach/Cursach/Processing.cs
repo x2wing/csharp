@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Cursach
 {
@@ -13,26 +14,42 @@ namespace Cursach
         {
         }
 
-        public List<Row> result_records;
+        //public List<Row> result_records;
 
         public delegate bool Filter(string txt, string command);
 
-        
 
-        public void less()
+        public Filter FooSelect()
         {
-            //if (GetCol(where_col)> where_arg)
-            //{
+            switch (where_op)
+            {
+                case ">":
+                    return item.key;
+                case "<":
+                    return item.id;
+                case "=":
+                    return item.surname;
+                case "l":
+                    return;
+                default:
+                    throw new Exception("операция не поддерживается используйте > < = l");
 
-            //}
-         }
+            }
+        }
 
-        public void greater()
-        { }
+        public void fill_result(Filter filter)
+        {
+            Table result_table = new Table();
+            foreach (Table T in Tables)
+                if (union_arg1 == T.tablename || union_arg2 == T.tablename) //если первый аргумент совпадает с именем таблицы
+                    foreach (Row record in T.records)
+                        if (filter(record[where_col], where_arg))
+                            result_table.records.Add(record);
 
-        public void equal()
-        { }
+                else if (Tables.Count == 1) ; //какое-то действие
+               
 
+        }
 
         public static string FileSelect()
         {
@@ -90,13 +107,8 @@ namespace Cursach
         }
 
 
-        public void fill_result(Filter filter)
-        {
-            //foreach (Row record in records)
-            //    if (filter("", ""))
-            //        result_records.Add(record);
-
-        }
+        
 
     }
 }
+

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Cursach
 {
@@ -14,7 +15,8 @@ namespace Cursach
     {
         
         //Filter filter = new Filter(Match);
-        private List<Row> _records;
+        public List<Row> _records;
+
         Form1 thisform;
         public  FormOut(Form1 thisform, List<Row> ext_records)
         {
@@ -22,8 +24,18 @@ namespace Cursach
             this._records = ext_records;
         }
 
+        public void ReadCmd()
+        {
+            string line;
+            StreamReader file = new StreamReader(PROCESSING.FileSelect());
+            while ((line = file.ReadLine()) != null)
+            {
+                thisform.lstCmd.Items.Add(line);
 
-        
+            }
+
+        }
+
 
         public void Write()
         {

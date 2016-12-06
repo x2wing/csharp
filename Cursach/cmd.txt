@@ -1,0 +1,1 @@
+union student_fio  student_fio|where id > 0|

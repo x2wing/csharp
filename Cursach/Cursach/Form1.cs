@@ -26,6 +26,10 @@ namespace Cursach
 
         private void button2_Click(object sender, EventArgs e)
         {
+
+            
+            
+            // получаем список путей к файлам таблиц
             List<string> FilePaths=new List<string>();
             foreach (string item in lstFilePaths.Items)
             {
@@ -33,6 +37,13 @@ namespace Cursach
             }
 
             PROCESSING data = new PROCESSING(FilePaths);
+            // анализ и разбор команды
+            foreach (string icmd in lstCmd.Items)
+            {
+                if (data.Sintax_analize(icmd))
+                    data.Semantec_analize_foo(icmd);
+
+            }
             // FilePaths в конструктор
             //FormOut A = new FormOut(this, Data1.records);
             //A.Write();
@@ -67,17 +78,25 @@ namespace Cursach
             
 
             //StartInit A = new StartInit("");
-            //foreach (string icmd in lstCmd.Items)
-            //{
-            //    if (A.Sintax_analize(icmd))
-            //        A.Semantec_analize_foo(icmd);
-            //}
+            //
+            //
+            //
+            //
+            //
 
         }
 
         private void lstCmd_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnCmd_Click(object sender, EventArgs e)
+        {
+            FormOut OUT = new FormOut(this, null );
+            
+            OUT.ReadCmd(); //прочитали файл в кнопку
+            
         }
     }
 }
