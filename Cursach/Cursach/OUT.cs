@@ -10,7 +10,7 @@ namespace Cursach
     {
     }
 
-    class FormOut : PROCESSING
+    class FormOut 
     {
         
         //Filter filter = new Filter(Match);

@@ -9,6 +9,10 @@ namespace Cursach
 {
     class PROCESSING :StartInit
     {
+        public PROCESSING(List<string> filepath_from_lst) : base(filepath_from_lst)
+        {
+        }
+
         public List<Row> result_records;
 
         public delegate bool Filter(string txt, string command);
@@ -88,9 +92,9 @@ namespace Cursach
 
         public void fill_result(Filter filter)
         {
-            foreach (Row record in records)
-                if (filter("", ""))
-                    result_records.Add(record);
+            //foreach (Row record in records)
+            //    if (filter("", ""))
+            //        result_records.Add(record);
 
         }
 

@@ -26,20 +26,35 @@ namespace Cursach
 
         private void button2_Click(object sender, EventArgs e)
         {
-            FormOut A = new FormOut(this, Data1.records);
-            A.Write();
+            List<string> FilePaths=new List<string>();
+            foreach (string item in lstFilePaths.Items)
+            {
+                FilePaths.Add(item);
+            }
+
+            PROCESSING data = new PROCESSING(FilePaths);
+            // FilePaths в конструктор
+            //FormOut A = new FormOut(this, Data1.records);
+            //A.Write();
             //bool flag = PROCESSING.Match(txtCommnd.Text, "union * * where *");
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+
+
             
-            string filepath=PROCESSING.FileSelect();
-            txtFilePath.Text = filepath;
-            Data1 = new StartInit();
-            Data1.Filling(filepath);
-            // включим кнопку "результат"
+            lstFilePaths.Items.Add(PROCESSING.FileSelect());
+            //string A = lstFilePaths.Items.ToString();
+            //var a = lstFilePaths.Items.;
+            //txtFilePath.Text = filepath;
+            //Data1 = new StartInit();
+            //Data1.Filling(filepath);
+            //// включим кнопку "результат"
             button2.Enabled = true;
+
+
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -51,12 +66,12 @@ namespace Cursach
         {
             
 
-            StartInit A = new StartInit();
-            foreach (string icmd in lstCmd.Items)
-            {
-                if (A.Sintax_analize(icmd))
-                    A.Semantec_analize_foo(icmd);
-            }
+            //StartInit A = new StartInit("");
+            //foreach (string icmd in lstCmd.Items)
+            //{
+            //    if (A.Sintax_analize(icmd))
+            //        A.Semantec_analize_foo(icmd);
+            //}
 
         }
 

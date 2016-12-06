@@ -30,7 +30,6 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtFilePath = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.lsbOut = new System.Windows.Forms.ListBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -38,6 +37,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.lstCmd = new System.Windows.Forms.ListBox();
+            this.lstFilePaths = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // label1
@@ -54,20 +54,12 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(58, 181);
+            this.label2.Location = new System.Drawing.Point(58, 246);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(103, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Выходные данные:";
-            // 
-            // txtFilePath
-            // 
-            this.txtFilePath.Location = new System.Drawing.Point(185, 33);
-            this.txtFilePath.Margin = new System.Windows.Forms.Padding(2);
-            this.txtFilePath.Name = "txtFilePath";
-            this.txtFilePath.Size = new System.Drawing.Size(352, 20);
-            this.txtFilePath.TabIndex = 2;
             // 
             // button1
             // 
@@ -76,17 +68,17 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(106, 30);
             this.button1.TabIndex = 4;
-            this.button1.Text = "Обзор...";
+            this.button1.Text = "Добавить...";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // lsbOut
             // 
             this.lsbOut.FormattingEnabled = true;
-            this.lsbOut.Location = new System.Drawing.Point(185, 181);
+            this.lsbOut.Location = new System.Drawing.Point(185, 246);
             this.lsbOut.Margin = new System.Windows.Forms.Padding(2);
             this.lsbOut.Name = "lsbOut";
-            this.lsbOut.Size = new System.Drawing.Size(352, 303);
+            this.lsbOut.Size = new System.Drawing.Size(352, 277);
             this.lsbOut.TabIndex = 5;
             // 
             // button2
@@ -116,7 +108,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(70, 69);
+            this.label3.Location = new System.Drawing.Point(70, 138);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(91, 13);
@@ -138,18 +130,27 @@
             // 
             this.lstCmd.FormattingEnabled = true;
             this.lstCmd.Items.AddRange(new object[] {
-            "union awhere      dfgdfg|"});
-            this.lstCmd.Location = new System.Drawing.Point(185, 69);
+            "union Teble1 Table2|where name = наталья  |"});
+            this.lstCmd.Location = new System.Drawing.Point(185, 138);
             this.lstCmd.Name = "lstCmd";
             this.lstCmd.Size = new System.Drawing.Size(352, 56);
             this.lstCmd.TabIndex = 12;
             this.lstCmd.SelectedIndexChanged += new System.EventHandler(this.lstCmd_SelectedIndexChanged);
             // 
+            // lstFilePaths
+            // 
+            this.lstFilePaths.FormattingEnabled = true;
+            this.lstFilePaths.Location = new System.Drawing.Point(185, 36);
+            this.lstFilePaths.Name = "lstFilePaths";
+            this.lstFilePaths.Size = new System.Drawing.Size(352, 43);
+            this.lstFilePaths.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 500);
+            this.ClientSize = new System.Drawing.Size(752, 551);
+            this.Controls.Add(this.lstFilePaths);
             this.Controls.Add(this.lstCmd);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label3);
@@ -157,7 +158,6 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.lsbOut);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.txtFilePath);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -172,7 +172,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtFilePath;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnSave;
@@ -180,6 +179,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ListBox lstCmd;
+        private System.Windows.Forms.ListBox lstFilePaths;
     }
 }
 
