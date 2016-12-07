@@ -93,7 +93,7 @@ namespace Cursach
 
         private void btnCmd_Click(object sender, EventArgs e)
         {
-            FormOut OUT = new FormOut(this, null );
+            _Out OUT = new _Out(this, null );
             
             OUT.ReadCmd(); //прочитали файл в кнопку
             

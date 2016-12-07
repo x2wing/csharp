@@ -4,24 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using CsvHelper;
 
 namespace Cursach
 {
-    class OUT
+    class FormOut:_Out
     {
+        public FormOut(Form1 thisform, Table ext_records) : base(thisform, ext_records) { }
+
+        public override void Write()
+        {
+            thisform.lsbOut.Items.Clear();
+            foreach (Row record in t_result.records)
+                thisform.lsbOut.Items.Add(String.Format("{0};{1};{2};{3};{4}", record.key, record.id, record.surname, record.name, record.last_name));
+        }
     }
 
-    class FormOut 
+    class _Out 
     {
         
-        //Filter filter = new Filter(Match);
-        public List<Row> _records;
+        
+        public Table t_result;
 
-        Form1 thisform;
-        public  FormOut(Form1 thisform, List<Row> ext_records)
+        protected Form1 thisform;
+        public  _Out(Form1 thisform, Table ext_records)
         {
             this.thisform = thisform;
-            this._records = ext_records;
+            this.t_result = ext_records;
         }
 
         public void ReadCmd()
@@ -36,13 +45,16 @@ namespace Cursach
 
         }
 
-
-        public void Write()
+        public virtual  void Write()
         {
-            thisform.lsbOut.Items.Clear();
-            foreach (Row record in _records)
-                thisform.lsbOut.Items.Add(String.Format("{0};{1};{2};{3};{4}", record.key, record.id, record.surname, record.name, record.last_name));
+            using (var fd = new StreamWriter(@"В.csv"))
+            {
+                var writer = new CsvWriter(fd);
+                writer.WriteRecords(t_result.records);
+            }
         }
+
+
 
     }
 }

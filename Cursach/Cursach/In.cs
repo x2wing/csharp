@@ -139,17 +139,17 @@ namespace Cursach
                 const string command_mask2 = "union * *|";
                 const string command_mask3 = "where * ? *|";
 
-                if (command.Contains("union ") && command.Contains("where ") && PROCESSING.Match(command, command_mask1))
+                if (command.Contains("union ") && command.Contains("where ") && Match(command, command_mask1))
                 {
                     _Semantec_analize = new Semantec_analize(Semantic_analizerUW);
                     return true;
                 }
-                else if (command.Contains("union ") && PROCESSING.Match(command, command_mask2))
+                else if (command.Contains("union ") && Match(command, command_mask2))
                 {
                     _Semantec_analize = new Semantec_analize(SemanticAnalizerUnion);
                     return true;
                 }
-                else if (command.Contains("where ") && PROCESSING.Match(command, command_mask3))
+                else if (command.Contains("where ") && Match(command, command_mask3))
                 {
                     _Semantec_analize = new Semantec_analize(SemanticAnalizerWhere);
                     return true;
@@ -217,12 +217,57 @@ namespace Cursach
             }
 
 
-            //public string[] cleaning(string[] args)
-            //{
+        // метод поиска по маске
+        public  bool Match(string text, string match)
+        {
+            Stack<Tuple<int, int>> tasks = new Stack<System.Tuple<int, int>>();
+            tasks.Push(Tuple.Create(0, 0));
+            while (tasks.Count > 0)
+            {
+                var task = tasks.Pop();
+                int it = task.Item1;
+                int im = task.Item2;
+                while (it < text.Length && im < match.Length)
+                {
+                    if (match[im] == '?')
+                    {
+                        it++;
+                        im++;
+                    }
+                    else if (match[im] == '*')
+                    {
+                        tasks.Push(Tuple.Create(it + 1, im));
+                        im++;
+                    }
+                    else if (match[im] == text[it])
+                    {
+                        it++;
+                        im++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (it == text.Length)
+                {
+                    if (im == match.Length)
+                        return true;
 
-            //    //return clean_args;
-            //}
+                    if (im == match.Length - 1 && match[im] == '*')
+                        return true;
+                }
+            }
+            return false;
         }
+
+
+        //public string[] cleaning(string[] args)
+        //{
+
+        //    //return clean_args;
+        //}
+    }
 
 
 
