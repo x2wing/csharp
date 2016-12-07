@@ -13,9 +13,14 @@ namespace Cursach
         private delegate bool OperationDelegate(string txt, string mask);
         private Dictionary<string, OperationDelegate> _operations;
         //тут будет хранится результат
-        Table result_table = new Table();
+        private Table result_table = new Table();
 
-        public PROCESSING(List<string> filepath_from_lst) : base(filepath_from_lst)
+        public Table Get_result_table()
+        {
+            return result_table;
+        }
+        //public PROCESSING(List<string> filepath_from_lst) : base(filepath_from_lst)
+        public PROCESSING(HashSet<string> filepath_from_lst) : base(filepath_from_lst)
         {
             FooSelecter();
         }
@@ -42,7 +47,7 @@ namespace Cursach
             
         }
 
-        public void fill_result()
+        public void Fill_result()
         {
             
             foreach (Table T in Tables)
@@ -56,7 +61,7 @@ namespace Cursach
                         if (_operations[where_op](record[where_col], where_arg))
                             result_table.records.Add(record);
 
-                else if (Tables.Count == 1) ; //какое-то действие
+                //else if (Tables.Count == 1) ; //какое-то действие
                
 
         }

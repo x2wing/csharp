@@ -35,7 +35,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
             this.lstCmd = new System.Windows.Forms.ListBox();
             this.lstFilePaths = new System.Windows.Forms.ListBox();
             this.btnCmd = new System.Windows.Forms.Button();
@@ -85,7 +84,7 @@
             // button2
             // 
             this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(598, 267);
+            this.button2.Location = new System.Drawing.Point(598, 233);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(106, 30);
@@ -97,7 +96,7 @@
             // btnSave
             // 
             this.btnSave.Enabled = false;
-            this.btnSave.Location = new System.Drawing.Point(598, 233);
+            this.btnSave.Location = new System.Drawing.Point(598, 267);
             this.btnSave.Margin = new System.Windows.Forms.Padding(2);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(106, 30);
@@ -115,17 +114,6 @@
             this.label3.Size = new System.Drawing.Size(91, 13);
             this.label3.TabIndex = 9;
             this.label3.Text = "Cтрока запроса:";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(598, 301);
-            this.button3.Margin = new System.Windows.Forms.Padding(2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(106, 30);
-            this.button3.TabIndex = 11;
-            this.button3.Text = "тестовая кнопка";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // lstCmd
             // 
@@ -163,7 +151,6 @@
             this.Controls.Add(this.btnCmd);
             this.Controls.Add(this.lstFilePaths);
             this.Controls.Add(this.lstCmd);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.button2);
@@ -188,7 +175,6 @@
         private System.Windows.Forms.Button btnSave;
         public System.Windows.Forms.ListBox lsbOut;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ListBox lstFilePaths;
         private System.Windows.Forms.Button btnCmd;
         public System.Windows.Forms.ListBox lstCmd;

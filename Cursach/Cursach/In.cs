@@ -46,9 +46,16 @@ namespace Cursach
     class Table
     {
 
-        public List<Row> records;
+        public List<Row> records= new List<Row>();
         public string tablename;
         // метод абстрактный для заполнения списка      
+
+
+
+        //public void RecordAdd(Row record)
+        //{
+        //    records.Add(record);
+        //}
 
         public Table() { }
 
@@ -98,7 +105,7 @@ namespace Cursach
         protected static string where_arg; // аргумент операции
 
 
-        public StartInit(List<string> filepaths_from_lst) 
+        public StartInit(HashSet<string> filepaths_from_lst) 
         {
             foreach (string filepath in filepaths_from_lst)
             {

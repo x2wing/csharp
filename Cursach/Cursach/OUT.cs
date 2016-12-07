@@ -37,6 +37,7 @@ namespace Cursach
         {
             string line;
             StreamReader file = new StreamReader(PROCESSING.FileSelect());
+            thisform.lstCmd.Items.Clear();
             while ((line = file.ReadLine()) != null)
             {
                 thisform.lstCmd.Items.Add(line);
@@ -47,7 +48,7 @@ namespace Cursach
 
         public virtual  void Write()
         {
-            using (var fd = new StreamWriter(@"В.csv"))
+            using (var fd = new StreamWriter(PROCESSING.FileSelect()))
             {
                 var writer = new CsvWriter(fd);
                 writer.WriteRecords(t_result.records);

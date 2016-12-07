@@ -13,49 +13,47 @@ namespace Cursach
 {
     public partial class Form1 : Form
     {
-        StartInit Data1;
+        Table result; 
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void button2_Click(object sender, EventArgs e)
         {
-
-            
-            
-            // получаем список путей к файлам таблиц
-            List<string> FilePaths=new List<string>();
+            /* получаем список путей к файлам таблиц  в переменную FilePaths
+            HashSet - структура которая не может содержать повторяющихся элементов*/
+            HashSet<string> FilePaths=new HashSet<string>();
             foreach (string item in lstFilePaths.Items)
             {
                 FilePaths.Add(item);
             }
-
+            // создаем все
             PROCESSING data = new PROCESSING(FilePaths);
-            // анализ и разбор команды
+            // анализ и разбор команд в цикле
             foreach (string icmd in lstCmd.Items)
             {
                 if (data.Sintax_analize(icmd))
+                {
                     data.Semantec_analize_foo(icmd);
-
+                    data.Fill_result();
+                }
             }
-            // FilePaths в конструктор
-            //FormOut A = new FormOut(this, Data1.records);
-            //A.Write();
-            //bool flag = PROCESSING.Match(txtCommnd.Text, "union * * where *");
+
+
+            result = data.Get_result_table();// вывод результата на форму параметры конструктора:this - экземпляр формы и data.Get_result_table()-результирующая таблица
+            FormOut OutputToForm = new FormOut(this, result);
+            OutputToForm.Write();
+           
+            // после заполнения результирующей таблицы включим кнопку сохранить
+            btnSave.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-
-
-            
             lstFilePaths.Items.Add(PROCESSING.FileSelect());
             //string A = lstFilePaths.Items.ToString();
             //var a = lstFilePaths.Items.;
@@ -64,25 +62,19 @@ namespace Cursach
             //Data1.Filling(filepath);
             //// включим кнопку "результат"
             button2.Enabled = true;
-
-
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            //Table file1 = new Table();
+            _Out OutputToFile = new _Out(this, result);
+            OutputToFile.Write();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             
 
-            //StartInit A = new StartInit("");
-            //
-            //
-            //
-            //
-            //
+            
 
         }
 
@@ -93,10 +85,15 @@ namespace Cursach
 
         private void btnCmd_Click(object sender, EventArgs e)
         {
+
             _Out OUT = new _Out(this, null );
-            
             OUT.ReadCmd(); //прочитали файл в кнопку
             
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

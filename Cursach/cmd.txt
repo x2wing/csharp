@@ -1,1 +1,1 @@
-union student_fio  student_fio|where id > 0|
+union table2  students_fio|where last_name l Вл*|
