@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CsvHelper;
 using System.IO;
+using System.Windows.Forms;
+
 
 namespace Cursach
 {
@@ -35,36 +37,34 @@ namespace Cursach
                     case "last_name":
                         return this.last_name;
                 }
-
-                throw new FileLoadException("ошибка в имени поля таблицы оператора where");
-
+                throw new ArgumentException(string.Format("операция {0} не поддерживается", pole), "pole");
             }
         }
     }
-    // класс список всех строк  из файла
 
+    // класс список всех строк  из файла
     class Table
     {
-
+        // хранилище данных из файла
         public List<Row> records= new List<Row>();
         public string tablename;
-        // метод абстрактный для заполнения списка      
+             
+        // получить все записи
+        public List<Row> GetRecords()
+        {
+            return records;
+        }
 
-
-
-        //public void RecordAdd(Row record)
-        //{
-        //    records.Add(record);
-        //}
-
+        
+        // конструктор создать пустую таблицу
         public Table() { }
-
+        // конструктор заполняет таблицу и присваивает ей имя
         public Table(string path)
         {
             FillingTable(path);
             SetTableName(path);
         }
-
+        // распарсивает путь к файлу таблицы и выдергивает имя файла без раширения
         private void SetTableName(string path)
         {
             string[] separators = { @"\", @"." };
@@ -72,7 +72,7 @@ namespace Cursach
             this.tablename = temp[temp.Length-2] ;            
         }
 
-
+        // заполнитель хранилища
         private void FillingTable(string path)
         {
             using (var fd = new StreamReader(path))
@@ -82,20 +82,17 @@ namespace Cursach
                 reader.Configuration.Delimiter = ";";
                 records = reader.GetRecords<Row>().ToList();
             }
-
-
         }
-
     }
-
-
 
 
     class StartInit 
     {
+        // делегат для методов семантичесого разбора
         public delegate void Semantec_analize(string cmd);
-
+        // переменая для делегата
         Semantec_analize _Semantec_analize;
+        // список обрабатываемых таблиц
         protected List<Table> Tables = new List<Table>();
         // аргументы команды
         protected static string union_arg1;
@@ -104,7 +101,7 @@ namespace Cursach
         protected static string where_op; // операция [><=like]
         protected static string where_arg; // аргумент операции
 
-
+        // конструктор заполняет список таблиц
         public StartInit(HashSet<string> filepaths_from_lst) 
         {
             foreach (string filepath in filepaths_from_lst)
@@ -114,32 +111,8 @@ namespace Cursach
             }
         }
 
-        
-
-
-        public Object GetCol(string where_col, Row item)
-            {
-                switch (where_col)
-                {
-                    case "key":
-                        return item.key;
-                    case "id":
-                        return item.id;
-                    case "surname":
-                        return item.surname;
-                    case "name":
-                        return item.name;
-                    case "last_name":
-                        return item.last_name;
-                    default:
-                        return null;
-
-                }
-
-
-            }
-
-
+        /* костыльный синтаксический анализ. прогоняет команду по маске ищет 
+         * ключевые слова и указывает на используемый семантический анализатор*/
         public bool Sintax_analize(string command)
             {
                 const string command_mask1 = "union * *|where * ? *|";
@@ -166,29 +139,22 @@ namespace Cursach
                 return false;
             }
 
-
+        // делегат семантического анализа
         public void Semantec_analize_foo(string cmd)
             {
                 _Semantec_analize(cmd);
             }
 
 
-
+        // семантический анализ полной команды
         public static void Semantic_analizerUW(string cmd)
             {
                 List<string> args_temp = new List<string>(cmd.Split('|'));
                 SemanticAnalizerUnion(args_temp[0]);
                 SemanticAnalizerWhere(args_temp[1]);
-                //args.RemoveAll(s => s == "");
-                //if (!args[2].EndsWith("|"))
-                //    throw new FileLoadException("слишком много аргументов у операции union поддерживается объединение только двух таблиц");
-                //else
-                //    args[2] = args[2].Trim('|');
-
-
             }
-        //
-
+        
+        //семантический анализ union
         public static void SemanticAnalizerUnion(string cmd)
             {
 
@@ -196,7 +162,7 @@ namespace Cursach
                 List<string> args = new List<string>(cmd.Split(' '));
                 args.RemoveAll(s => s == "");
                 if (args.Count != 3)
-                    throw new FileLoadException("не корректная команда union");
+                    throw new ArgumentException("Некорректная команда union");
                 if (args[2].EndsWith("|"))
                     args[2] = args[2].Trim('|');
                 union_arg1 = args[1];
@@ -205,21 +171,22 @@ namespace Cursach
 
 
             }
-
+        //семантический анализ where
         public static void SemanticAnalizerWhere(string cmd)
             {
-                List<string> args = new List<string>(cmd.Split(' '));
-                args.RemoveAll(s => s == "");
-                if (args.Count != 4)
-                    throw new FileLoadException("не корректная команда where");
 
-                if (!(args[2] == ">" || args[2] == "<" || args[2] == "=" || args[2] == "l"))
-                    throw new FileLoadException("не корректная операция. поддерживаются только > < = l");
-                if (args[3].EndsWith("|"))
-                    args[3] = args[3].Trim('|');
-                where_col = args[1];
-                where_op = args[2];
-                where_arg = args[3];
+            List<string> args = new List<string>(cmd.Split(' '));
+            args.RemoveAll(s => s == "");
+            if (args.Count != 4)
+                throw new ArgumentException("Некорректная команда where");
+            if (!(args[2] == ">" || args[2] == "<" || args[2] == "=" || args[2] == "l"))
+                throw new ArgumentException("Некорректная операция. поддерживаются только > < = l ", args[2]);
+
+            if (args[3].EndsWith("|"))
+                args[3] = args[3].Trim('|');
+            where_col = args[1];
+            where_op = args[2];
+            where_arg = args[3];
 
             }
 
@@ -267,17 +234,7 @@ namespace Cursach
             }
             return false;
         }
-
-
-        //public string[] cleaning(string[] args)
-        //{
-
-        //    //return clean_args;
-        //}
     }
-
-
-
-    }
+}
 
 

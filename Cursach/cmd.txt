@@ -1,1 +1,1 @@
-union table2  students_fio|where last_name l Вл*|
+union table2  students_fio|where last_name t Вл*|
