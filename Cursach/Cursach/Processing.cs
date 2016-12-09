@@ -86,6 +86,8 @@ namespace Cursach
             return null;
         }
 
+        
+
         //чтение файла в поле команды
         public static void ReadCmd(Form1 thisform)
         {

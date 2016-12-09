@@ -53,6 +53,17 @@ namespace Cursach
             catch(ArgumentException Errno)
             {
                 MessageBox.Show(this, Errno.Message, Errno.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            catch(CsvHelper.CsvMissingFieldException Errno)
+            {
+                MessageBox.Show(this, Errno.Message, Errno.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            catch
+            {
+                MessageBox.Show(this, "Возникла ошибка при обработке", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             // после заполнения результирующей таблицы включим кнопку сохранить
             btnSave.Enabled = true;
