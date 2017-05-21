@@ -4,32 +4,77 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Cursach
 {
-    class PROCESSING :StartInit
+    class PROCESSING : StartInit
     {
-        public List<Row> result_records;
+        // делегат выбора операции
+        private delegate bool OperationDelegate(string txt, string mask);
+        //словарь соответсвия  знака операции и фунции фильтрации
+        private Dictionary<string, OperationDelegate> _operations;
+        //тут будет хранится результат
+        private Table result_table = new Table();
 
-        public delegate bool Filter(string txt, string command);
-
-        
-
-        public void less()
+        // получить результат во вне
+        public Table Get_result_table()
         {
-            if (GetCol(where_col)> where_arg)
+            return result_table;
+        }
+        // заполнитель словаря делегата
+        public PROCESSING(HashSet<string> filepath_from_lst) : base(filepath_from_lst)
+        {
+            FooSelecter();
+        }
+
+        //public List<Row> result_records;
+
+        //public delegate bool Filter(string txt, string command);
+
+
+
+
+        // механизм делегата выбират нужную функцию в зависмости от операции
+        public void FooSelecter()
+        {
+            _operations = new Dictionary<string, OperationDelegate>
+
             {
-
-            }
-         }
-
-        public void greater()
-        { }
-
-        public void equal()
-        { }
+                { ">", (col, arg) => String.CompareOrdinal(col,  arg)>0 },
+                { "<", (col, arg) => String.CompareOrdinal(col,  arg)<0 },
+                { "=", (col, arg) => String.Equals(col,  arg)},
+                { "l", Match},
+            };
 
 
+        }
+
+        public void Fill_result()
+        {
+            // перебор всех таблиц и записей в них
+            foreach (Table T in Tables)
+                if (union_arg1 == T.tablename || union_arg2 == T.tablename) //если первый аргумент совпадает с именем таблицы
+                    foreach (Row record in T.records)
+                        /* тут самая сильная магия (делегаты, индексаторы, словари)
+                         если выбранное поле отдельной записи > < = или по маске(в зависмости отwhere_op) чем where_arg (правый аругмент в команде)
+                         то добавляем в результирующую таблицу
+                         в [] ключ словаря в () параметры функции(или лямбды) в делегате вытащеном из значения словаря
+                         */
+                        if (_operations[where_op](record[where_col], where_arg))
+                            result_table.records.Add(record);
+
+            
+
+
+        }
+    }
+
+    // служебный класс статических независимых функции
+    public class Service
+    {
+
+        //openfileduialog возвращающий строку пути к файлу
         public static string FileSelect()
         {
             OpenFileDialog dlg = new OpenFileDialog();
@@ -41,58 +86,23 @@ namespace Cursach
             return null;
         }
 
-        // метод поиска по маске
-        public static bool Match(string text, string match)
+        
+
+        //чтение файла в поле команды
+        public static void ReadCmd(Form1 thisform)
         {
-            Stack<Tuple<int, int>> tasks = new Stack<System.Tuple<int, int>>();
-            tasks.Push(Tuple.Create(0, 0));
-            while (tasks.Count > 0)
+            string line;
+            StreamReader file = new StreamReader(FileSelect());
+            thisform.lstCmd.Items.Clear();
+            while ((line = file.ReadLine()) != null)
             {
-                var task = tasks.Pop();
-                int it = task.Item1;
-                int im = task.Item2;
-                while (it < text.Length && im < match.Length)
-                {
-                    if (match[im] == '?')
-                    {
-                        it++;
-                        im++;
-                    }
-                    else if (match[im] == '*')
-                    {
-                        tasks.Push(Tuple.Create(it + 1, im));
-                        im++;
-                    }
-                    else if (match[im] == text[it])
-                    {
-                        it++;
-                        im++;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                if (it == text.Length)
-                {
-                    if (im == match.Length)
-                        return true;
+                thisform.lstCmd.Items.Add(line);
 
-                    if (im == match.Length - 1 && match[im] == '*')
-                        return true;
-                }
             }
-            return false;
-        }
-
-
-        public void fill_result(Filter filter)
-        {
-            foreach (Row record in records)
-                if (filter("", ""))
-                    result_records.Add(record);
 
         }
+
 
     }
 }
+

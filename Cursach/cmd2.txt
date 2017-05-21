@@ -1,0 +1,1 @@
+union table2  students_fio|where name = Ксения|
